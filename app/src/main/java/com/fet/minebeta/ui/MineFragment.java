@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fet.minebeta.R;
 
@@ -15,7 +16,7 @@ import com.fet.minebeta.R;
  * All rights reserved.
  * Please contact @fettucciari.leonardo@gmail.com
  */
-public class MineFragment extends Fragment implements View.OnClickListener {
+public class MineFragment extends Fragment {
     // Store instance variables
     private String mName;
     private String mMineral;
@@ -23,6 +24,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private int mDropRate;
     private int mLayout;
     private boolean mIsUnlocked;
+
+    private User mUser;
 
     private Button mineUnlockButton;
     private View overlay;
@@ -69,6 +72,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mDropRate = getArguments().getInt("MINE_RATE");
         mLayout = getArguments().getInt("MINE_LAYOUT");
         mIsUnlocked = getArguments().getBoolean("MINE_IS_UNLOCKED", false);
+
+        // HARD CODED VALUES
+        mUser = new User("Leonardo");
+        mUser.setGold(2000);
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -90,18 +97,26 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mineDropRate.setText(String.valueOf(mDropRate));
         mineUnlockButton.setText(String.valueOf(mUnlockCost));
 
+        // Unlock Button
+        mineUnlockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mUser.getGold() >= mUnlockCost) {
+                    overlay.setVisibility(View.GONE); // Remove overlay and button
+                    mineUnlockButton.setVisibility(View.GONE);
+                    System.out.println("Gold: " + mUser.getGold() + " | Cost: " + mUnlockCost);
+                    mUser.setGold(mUser.getGold() - mUnlockCost); // Update user's gold
+                    System.out.println("Gold: " + mUser.getGold());
+                    System.out.println("### Mine Purchased ###");
+
+                } else { // Not enough money
+                    Toast.makeText(getContext(), "Not enough money to purchase", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return view;
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.unlockButton: // If mine purchased successfully, remove overlay and button
-                overlay.setVisibility(View.GONE);
-                mineUnlockButton.setVisibility(View.GONE);
-                System.out.println("### Mine Purchased ###");
-                break;
-        }
-    }
 }
