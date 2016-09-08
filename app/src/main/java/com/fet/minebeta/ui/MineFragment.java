@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fet.minebeta.R;
 
@@ -24,8 +23,6 @@ public class MineFragment extends Fragment {
     private int mDropRate;
     private int mLayout;
     private boolean mIsUnlocked;
-
-    private User mUser;
 
     private Button mineUnlockButton;
     private View overlay;
@@ -73,9 +70,6 @@ public class MineFragment extends Fragment {
         mLayout = getArguments().getInt("MINE_LAYOUT");
         mIsUnlocked = getArguments().getBoolean("MINE_IS_UNLOCKED", false);
 
-        // HARD CODED VALUES
-        mUser = new User("Leonardo");
-        mUser.setGold(2000);
     }
 
     // Inflate the view for the fragment based on layout XML
@@ -96,25 +90,6 @@ public class MineFragment extends Fragment {
         mineMineral.setText(mMineral);
         mineDropRate.setText(String.valueOf(mDropRate));
         mineUnlockButton.setText(String.valueOf(mUnlockCost));
-
-        // Unlock Button
-        mineUnlockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(mUser.getGold() >= mUnlockCost) {
-                    overlay.setVisibility(View.GONE); // Remove overlay and button
-                    mineUnlockButton.setVisibility(View.GONE);
-                    System.out.println("Gold: " + mUser.getGold() + " | Cost: " + mUnlockCost);
-                    mUser.setGold(mUser.getGold() - mUnlockCost); // Update user's gold
-                    System.out.println("Gold: " + mUser.getGold());
-                    System.out.println("### Mine Purchased ###");
-
-                } else { // Not enough money
-                    Toast.makeText(getContext(), "Not enough money to purchase", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         return view;
     }

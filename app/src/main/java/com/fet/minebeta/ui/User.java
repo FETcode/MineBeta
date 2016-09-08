@@ -6,49 +6,53 @@ package com.fet.minebeta.ui;
  * Please contact @fettucciari.leonardo@gmail.com
  */
 public class User {
+    private String userName;
+    private int gold;
+    private int experience;
+    private int experienceLevel = 1;
 
-    private String mName;
-    private int mGold;
-    private int mExperience;
-    private int mExperienceLevel;
-
-    public User(String name){
-        mName = name;
-        mGold = 0;
-        mExperience = 0;
-        mExperienceLevel = 1;
+    /**
+     * @param userName
+     * @param gold
+     * @param experience
+     * @param experienceLevel
+     */
+    public User(String userName, int gold, int experience, int experienceLevel) {
+        this.userName = userName;
+        this.gold = gold;
+        this.experience = experience;
+        this.experienceLevel = experienceLevel;
     }
 
-    // Getters & Setters
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public int getGold() {
-        return mGold;
-    }
+    //Setters
 
     public void setGold(int gold) {
-        mGold = gold;
-    }
-
-    public int getExperience() {
-        return mExperience;
+        this.gold = gold;
     }
 
     public void setExperience(int experience) {
-        mExperience = experience;
-    }
-
-    public int getExperienceLevel() {
-        return mExperienceLevel;
+        this.experience = experience;
     }
 
     public void setExperienceLevel(int experienceLevel) {
-        mExperienceLevel = experienceLevel;
+        this.experienceLevel = experienceLevel;
+    }
+
+    //Getters
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public int getExperienceLevel() {
+        return experienceLevel;
     }
 }
